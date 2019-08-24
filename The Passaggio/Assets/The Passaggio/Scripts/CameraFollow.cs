@@ -5,64 +5,43 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 
-    /*
-    [SerializeField]
-    Transform target { get; set; }
 
 
-    public float distance { get; set; }
-    [InspectorRange(0f, 90f)]
-    [SerializeField]
-    float angle { get; set; }
-    [SerializeField]
-    float rotation { get; set; }
-    */
+    private Transform player;
 
-    [SerializeField]
-    private GeneralManager generalManager;
-
-    public float distance;
+    public float distance=15;
     [Range(0f, 90f)]
     [SerializeField]
     private float angle;
     [SerializeField]
     private float rotation;
 
-    [SerializeField]
-    private bool isCamera = false;
 
-    private void Awake()
-    {
-        if (generalManager != null && isCamera)
-            generalManager.cameraFollow = this;
-    }
 
-    void Start () {
-        if (generalManager != null && generalManager.currentPlayerCharacter != null)
-        {
-            Follow(generalManager.currentPlayerCharacter.transform);
-            transform.LookAt(generalManager.currentPlayerCharacter.transform);
-        }
-            
+    void Awake () {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        Follow(player);
+        transform.LookAt(player);
     }
 	
 	void Update () {
-        if (generalManager != null && generalManager.currentPlayerCharacter != null)
-        {
-            Follow(generalManager.currentPlayerCharacter.transform);
+
+        Follow(player);
 #if UNITY_EDITOR
-            transform.LookAt(generalManager.currentPlayerCharacter.transform);
+        transform.LookAt(player);
 #endif
-
-        }
-
-
     }
 
     void Follow(Transform target)
     {
-        transform.position = target.position;
+        if(target.position.y > 0)
+        {
+            transform.position = target.position;
+            transform.position -= transform.forward * distance;
+        }
+
         transform.rotation = Quaternion.Euler(90f - angle, rotation, 0f);
-        transform.position -= transform.forward * distance;
+      
     }
+
 }
