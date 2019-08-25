@@ -26,26 +26,31 @@ public class Bridge : MonoBehaviour
     public List<Tile> tiles;
     GameObject bridge;
     CreateScene createScene;
+    GameObject manager; 
     List<int> numbers = new List<int>() { 0, 1, 2, 3, 4, 5 };
 
 
     private void Awake()
     {
         tiles = new List<Tile>();
+        manager = GameObject.Find("GameManager");
         bridge = GameObject.Find("Bridge");
-        createScene = GetComponent<CreateScene>();
+        createScene = manager.GetComponent<CreateScene>();
         Assign();
     }
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(TilesDestroy(bridge));
+        StartCoroutine(TilesDestroy(createScene.Sections[0]));
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(createScene.Sections.Count==1)
+        {
+            StartCoroutine(TilesDestroy(createScene.Sections[0]));
+        }
     }
 
     private List<E> ShuffleList<E>(List<E> inputList)
@@ -65,11 +70,12 @@ public class Bridge : MonoBehaviour
 
     }
 
+    
     public void GetDestroyed(GameObject section)
     {
         StartCoroutine(TilesDestroy(section));
     }
-
+    
     IEnumerator TilesDestroy(GameObject section)
     {
         for (int i = 0; i < 10; i++)
@@ -79,14 +85,15 @@ public class Bridge : MonoBehaviour
             for (int j = 0; j < 6; j++)
             {
                 //tu odpada tegesik
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.5f);
             }
 
         }
-        Destroy(section);
+       
+       // createScene.Sections.Remove(createScene.Sections[0]);
         createScene.DestroyNextSection();
-        yield return null;
-
+        StopCoroutine(TilesDestroy(section));
+        
     }
 
     void Assign()

@@ -30,6 +30,13 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
+        if(player.transform.position.y<-0.5)
+        {
+            playerStamina.currentHealth = 0;
+            playerStamina.isDead=true;
+            playerStamina.Death();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.Translate(Vector3.up * Time.deltaTime * speed);

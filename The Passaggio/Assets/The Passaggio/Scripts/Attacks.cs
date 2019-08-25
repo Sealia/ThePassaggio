@@ -13,6 +13,7 @@ public class Attacks : MonoBehaviour
     private float interval = 4;
 
     GameObject player;
+    PlayerStats stats;
 
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class Attacks : MonoBehaviour
     { 
         Prefabs = Resources.LoadAll<GameObject>("Prefabs");
         player = GameObject.FindGameObjectWithTag("Player");
+        stats = player.GetComponent<PlayerStats>();
 
     }
 
@@ -37,23 +39,27 @@ public class Attacks : MonoBehaviour
 
     void RandomAttack()
     {
-        int Index = Random.Range(0,Prefabs.Length);
-
-        Vector3 spawnPos = new Vector3(spawnPosX, 0.5f, Random.Range(spawnRangeZ, spawnRangeZ+4));
-        if (Prefabs[Index].name=="Sphere")
+        if(stats.isDead==true)
         {
-            int num = Random.Range(1, 3);
-            Instantiate(Prefabs[Index], spawnPos, Prefabs[Index].transform.rotation);
-            for (int i=0; i<num;i++)
+            int Index = Random.Range(0, Prefabs.Length);
+
+            Vector3 spawnPos = new Vector3(spawnPosX, 0.5f, Random.Range(spawnRangeZ, spawnRangeZ + 4));
+            if (Prefabs[Index].name == "Sphere")
             {
-                Instantiate(Prefabs[Index], spawnPos + new Vector3(0, 0, 2), Prefabs[Index].transform.rotation);
+                int num = Random.Range(1, 3);
+                Instantiate(Prefabs[Index], spawnPos, Prefabs[Index].transform.rotation);
+                for (int i = 0; i < num; i++)
+                {
+                    Instantiate(Prefabs[Index], spawnPos + new Vector3(0, 0, 2), Prefabs[Index].transform.rotation);
+                }
+
             }
+            if (Prefabs[Index].name == "Macki")
+            {
 
+            }
         }
-        if (Prefabs[Index].name == "Macki")
-        {
-
-        }
+        
 
 
 

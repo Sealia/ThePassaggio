@@ -12,14 +12,16 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth;
     public int currentStamina;
     PlayerController playerController;
+    Createloop loop;
 
-    bool isDead;
+    public bool isDead;
     bool damaged;
     float timer;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        loop = GetComponent<Createloop>();
         currentHealth = startingHealth;
         currentStamina = startingStamina;
 
@@ -82,11 +84,18 @@ public class PlayerStats : MonoBehaviour
         }
     }
     
-    void Death()
+    public void Death()
     {
        isDead = true;
        playerController.enabled = false;
 
         // YOU DIED
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            loop.RestartGame();
+        }
+
+
+
     }
 }
