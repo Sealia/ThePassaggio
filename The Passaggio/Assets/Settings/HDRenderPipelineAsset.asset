@@ -124,6 +124,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 26bdddf49760c61438938733f07fa2a2, type: 2}
   - {fileID: 11400000, guid: 78322c7f82657514ebe48203160e3f39, type: 2}
   - {fileID: 11400000, guid: 62fd5d3f2e61bc44fb4fb3d83e87d305, type: 2}
+  - {fileID: 11400000, guid: d2af43167a2f10e45b2abf9025ac04b1, type: 2}
   m_Version: 5
   m_ObsoleteFrameSettings:
     overrides: 0
