@@ -3,7 +3,22 @@ guid: c561a292ba765ce49b2115ba9dba1a08
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bridge_body
+    second: {fileID: 2100000, guid: d44a415bac8d6064d9953b85c74d56b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bridge_columns
+    second: {fileID: 2100000, guid: 79c88ecdec79a8948a69cb7f7d16fc8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bridge_fractured_sides
+    second: {fileID: 2100000, guid: fda03c7c93b327a46a60aa9e86e1c134, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
