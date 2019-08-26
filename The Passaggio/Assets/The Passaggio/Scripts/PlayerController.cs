@@ -5,18 +5,26 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    private float speed = 20;
-    private float horizontalInput;
-    private float forwardInput;
+    public CameraFollow camera;
 
-    GameObject player;
-    PlayerStats playerStamina;
+    public float acceleration = 1;
+    public float maximumSpeed = 20;
+    public bool useCameraViewDirection = false;
+
+    private float horizontal;
+    private float vertical;
+    private new Rigidbody rigidbody;
+    private PlayerStats stats;
+
+    private Vector3 desiredDirection;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerStamina = player.GetComponent<PlayerStats>();
+        rigidbody = GetComponent<Rigidbody>();
+        stats = GetComponent<PlayerStats>();
     }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,37 +35,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
 
-        if(player.transform.position.y<-0.5)
+        desiredDirection = new Vector3(horizontal, 0, vertical).normalized;
+
+
+        if (useCameraViewDirection && desiredDirection != Vector3.zero)
         {
-            playerStamina.currentHealth = 0;
-            playerStamina.isDead=true;
-            playerStamina.Death();
+            desiredDirection = Quaternion.Euler(0, -(camera.Angle -45), 0) * desiredDirection;
+
+        }
+
+
+        // Death
+        if(rigidbody.position.y < -0.5f)
+        {
+            stats.currentHealth = 0;
+            stats.isDead=true;
+            stats.Death();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.Translate(Vector3.up * Time.deltaTime * speed);
-           // transform.Translate(Vector3.down * Time.deltaTime * speed * 2);
+
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
             Dodge();
         }
 
-            transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+        
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        rigidbody.AddForce(desiredDirection * acceleration, ForceMode.Force);
 
     }
 
     void Dodge()
     {
-            if(playerStamina.currentStamina>0)
+            if(stats.currentStamina>0)
             {
                 //unik
-                playerStamina.StaminaLoss();
+                stats.StaminaLoss();
             }
     }
 }
