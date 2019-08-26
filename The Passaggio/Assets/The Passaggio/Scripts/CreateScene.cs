@@ -57,7 +57,7 @@ public class CreateScene : MonoBehaviour
         Destroy(Sections[0].gameObject);
         Sections.Remove(Sections[0]);
 
-        if (Sections[2].transform.position.z < player.transform.position.z - 15)
+       /* if (Sections[2].transform.position.z < player.transform.position.z - 15)
         {
             for (int i = Sections.Count - 1; i >= 0; i--)
             {
@@ -68,7 +68,7 @@ public class CreateScene : MonoBehaviour
                 }
                 DestroyNextSection(i);
             }
-        }
+        }*/
             
 
 
