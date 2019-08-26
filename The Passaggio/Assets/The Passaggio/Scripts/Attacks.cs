@@ -58,15 +58,16 @@ public class Attacks : MonoBehaviour
         while(true)
         {
             int tentaclesNumber = Random.Range(1, 4);
-            
-            for(int i=0; i<tentaclesNumber;i++)
+            spawnRangeZ = player.transform.position.z - 2;
+
+            for (int i=0; i<tentaclesNumber;i++)
             {
                 num = Random.Range(0, 2);
                 float direction = Random.Range(-45, 45);
                 if (num == 0)
                 {
-                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 2.5f, bridge.transform.position.x - 4.5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
-                    if ((spawnPos.z > bridge.transform.position.z - 0.5f || spawnPos.z < bridge.transform.position.z + 0.5f) && spawnPos.x > 3.5f)
+                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 3f, bridge.transform.position.x - 5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
+                    if ((spawnPos.x > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x > 4f)
                     {
                         spawnPos.x -= 1;
                     }
@@ -79,11 +80,11 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= (prev.tran.z + 3) + direction * 5.07f && spawnPos.z >= (prev.tran.z - 3) - direction * 5.07f)
+                            if (spawnPos.z <= (prev.tran.z + 3) + (direction * 5.07f) && spawnPos.z >= (prev.tran.z - 3) - (direction * 5.07f))
                             {
                                 
                                 a++;
-                                spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 2.5f, bridge.transform.position.x - 4.5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));                              
+                                spawnPos.z = Random.Range(spawnRangeZ + 15, spawnRangeZ + 25);
                             }
                         }
                         check += 1;
@@ -110,9 +111,9 @@ public class Attacks : MonoBehaviour
                 }
                 else if (num == 1)
                 {
-                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 2.5f, bridge.transform.position.x + 4.5f), -30, Random.Range(spawnRangeZ, spawnRangeZ + 1));
+                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 3f, bridge.transform.position.x + 5f), -30, Random.Range(spawnRangeZ, spawnRangeZ + 1));
 
-                    if ((spawnPos.z > bridge.transform.position.z - 0.5f || spawnPos.z < bridge.transform.position.z + 0.5f) && spawnPos.x < 3.5f)
+                    if ((spawnPos.z > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x < 4f)
                     {
                         spawnPos.x += 1;
                     }
@@ -125,11 +126,11 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= (prev.tran.z + 3)+direction*5.07f && spawnPos.z >= (prev.tran.z - 3)- direction * 5.07f)
+                            if (spawnPos.z <= (prev.tran.z + 3)+(direction*5.07f) && spawnPos.z >= (prev.tran.z - 3)- (direction * 5.07f))
                             {
 
                                 a++;
-                                spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 2.5f, bridge.transform.position.x + 4.5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
+                                spawnPos.z = Random.Range(spawnRangeZ + 15, spawnRangeZ + 25);
                             }
                         }
                         check += 1;
@@ -156,13 +157,13 @@ public class Attacks : MonoBehaviour
                     
 
                 }
-              /*  foreach(Tentacles b in ten)
+                foreach(Tentacles b in ten)
                 {
-                    if(b.tran.z > player.transform.position.z-5)
+                    if(b.tran.z < player.transform.position.z-5)
                     {
                         ten.Remove(b);
                     }
-                }*/
+                }
                 yield return new WaitForSeconds(0.5f);
             }
              
