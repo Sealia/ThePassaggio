@@ -79,7 +79,7 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= prev.tran.z+3 && spawnPos.z >= prev.tran.z - 3)
+                            if (spawnPos.z <= (prev.tran.z + 3) + direction * 5.07f && spawnPos.z >= (prev.tran.z - 3) - direction * 5.07f)
                             {
                                 
                                 a++;
@@ -125,7 +125,7 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= prev.tran.z + 3 && spawnPos.z >= prev.tran.z - 3)
+                            if (spawnPos.z <= (prev.tran.z + 3)+direction*5.07f && spawnPos.z >= (prev.tran.z - 3)- direction * 5.07f)
                             {
 
                                 a++;
@@ -156,13 +156,19 @@ public class Attacks : MonoBehaviour
                     
 
                 }
-
+              /*  foreach(Tentacles b in ten)
+                {
+                    if(b.tran.z > player.transform.position.z-5)
+                    {
+                        ten.Remove(b);
+                    }
+                }*/
                 yield return new WaitForSeconds(0.5f);
             }
              
 
 
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
         }
         
     }
