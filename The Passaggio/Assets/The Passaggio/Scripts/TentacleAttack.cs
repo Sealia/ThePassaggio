@@ -8,8 +8,8 @@ public class TentacleAttack : MonoBehaviour
     GameObject player;
     PlayerStats death;
     List<int> column = new List<int>() { 24, 25, 30, 31, 32, 33, 38, 39 };
-    Bridge bridge;
-    GameObject br;
+    //Bridge bridge;
+    //GameObject br;
 
     public AudioClip[] impactSounds;
 
@@ -21,8 +21,8 @@ public class TentacleAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         death = GetComponent<PlayerStats>();
-        br = GameObject.Find("Bridge");
-        bridge = br.GetComponent<Bridge>();
+        //br = GameObject.Find("Bridge");
+        //bridge = br.GetComponent<Bridge>();
     }
     // Start is called before the first frame update
     void Start()
