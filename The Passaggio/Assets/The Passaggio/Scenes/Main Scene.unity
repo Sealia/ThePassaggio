@@ -286,22 +286,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 518213463, guid: 82c9c1e5123964547a876c2627a0be22, type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 1225974392}
-    - target: {fileID: 518213463, guid: 82c9c1e5123964547a876c2627a0be22, type: 3}
-      propertyPath: useCameraViewDirection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 518213463, guid: 82c9c1e5123964547a876c2627a0be22, type: 3}
-      propertyPath: maximumSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 518213463, guid: 82c9c1e5123964547a876c2627a0be22, type: 3}
-      propertyPath: acceleration
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82c9c1e5123964547a876c2627a0be22, type: 3}
 --- !u!4 &518213468 stripped
@@ -606,7 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightPrefab: {fileID: 6074329090622791387, guid: a030117adda87f84c80d7bb3d9283dd7,
     type: 3}
-  distanceBetweenLights: 20
+  distanceBetweenLights: 18
   lightDestroyDistance: 20
   maximumLightsAhead: 3
 --- !u!1 &891989417
@@ -943,14 +927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00a6ba3769bdbf43b3a321be18ddb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefabs:
-  - {fileID: 1950571138224594976, guid: 1a88df325ea98d04caf8de5b62849fa0, type: 3}
-  - {fileID: 2178005016962755936, guid: f9d4ad6dc6b264b4fa8369a422a0033d, type: 3}
   spawnRangeZ: 0
   spawnPosX: 0
   bridge: {fileID: 3935404288099079343, guid: 1ab483a7fb52ace47a262e6e5c642656, type: 3}
-  spawnX: -2.5
-  spawny: 2
+  pref: {fileID: 1950571138224594976, guid: 1a88df325ea98d04caf8de5b62849fa0, type: 3}
 --- !u!4 &987563101
 Transform:
   m_ObjectHideFlags: 0
