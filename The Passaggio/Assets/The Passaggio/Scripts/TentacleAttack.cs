@@ -41,7 +41,12 @@ public class TentacleAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.parent.tag=="Tile")
+        if (other.gameObject == player)
+        {
+            death.isDead = true;
+        }
+        else
+        if (other.transform.parent.tag=="Tile")
         {
 
             other.transform.parent.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
@@ -50,10 +55,7 @@ public class TentacleAttack : MonoBehaviour
 
         }
 
-        if(other.gameObject==player)
-        {
-            death.isDead = true;
-        }
+
     }
 
     IEnumerator Erease()
