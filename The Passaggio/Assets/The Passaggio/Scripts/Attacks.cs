@@ -111,7 +111,7 @@ public class Attacks : MonoBehaviour
 
                     for (int k = 0; k < ten.Count; k++)
                     {
-                        if (spawnPos.z <= (ten[k].tran.z + 3) + (direction / 45 * 0.7f) && spawnPos.z >= (ten[k].tran.z - 3) - (direction / 45 * 0.7f))
+                        if ( spawnPos.z <= (ten[k].tran.z + 3) + (direction / 45 * 0.7f) && spawnPos.z >= (ten[k].tran.z - 3) - (direction / 45 * 0.7f))
                         {
                             valid = false;
                             break;
@@ -121,7 +121,7 @@ public class Attacks : MonoBehaviour
                     if (valid)
                     {
                         Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction, 0f));
-                        if (t.tran.y > player.transform.position.y)
+                        if (t.tran.y < player.transform.position.y)
                         {
                             ten.Add(new Tentacles(spawnPos, Quaternion.Euler(0f, direction, 0f)));
                         }
