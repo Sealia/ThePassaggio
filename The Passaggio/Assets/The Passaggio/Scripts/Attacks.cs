@@ -80,7 +80,7 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= (prev.tran.z + 3) + (direction * 5*07f) && spawnPos.z >= (prev.tran.z - 3) - (direction * 5*07f))
+                            if (spawnPos.z <= (prev.tran.z + 3) + (direction /45*07f) && spawnPos.z >= (prev.tran.z - 3) - (direction  /45*07f))
                             {
                                 
                                 a++;
@@ -126,7 +126,7 @@ public class Attacks : MonoBehaviour
                         int a = 0;
                         foreach (Tentacles prev in ten)
                         {
-                            if (spawnPos.z <= (prev.tran.z + 3)+(direction*5*07f) && spawnPos.z >= (prev.tran.z - 3)- (direction * 5*07f))
+                            if (spawnPos.z <= (prev.tran.z + 3)+(direction/45*07f) && spawnPos.z >= (prev.tran.z - 3)- (direction/45f *07f))
                             {
 
                                 a++;
