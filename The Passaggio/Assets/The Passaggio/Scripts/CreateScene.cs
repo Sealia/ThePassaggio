@@ -57,6 +57,20 @@ public class CreateScene : MonoBehaviour
         Destroy(Sections[0].gameObject);
         Sections.Remove(Sections[0]);
 
+       /* if (Sections[2].transform.position.z < player.transform.position.z - 15)
+        {
+            for (int i = Sections.Count/2 - 1; i >= 0; i--)
+            {
+                if (Sections[i].transform.position.z < player.transform.position.z - 15)
+                {
+                    Destroy(Sections[i].gameObject);
+                    Sections.Remove(Sections[i]);
+                    Sections[i].Stop();
+                }
+            }
+        }*/
+            
+
 
     }
 

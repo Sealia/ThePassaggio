@@ -34,6 +34,7 @@ public class Bridge : MonoBehaviour
     List<int> numbers2;
     List<int> column = new List<int>() { 24, 25, 30, 31, 32, 33, 38, 39 };
     Rigidbody rb;
+    GameObject player;
 
 
     private void Awake()
@@ -41,6 +42,7 @@ public class Bridge : MonoBehaviour
         tiles = new List<Tile>();
         manager = GameObject.Find("GameManager");
         bridge = GameObject.Find("Bridge");
+        player = GameObject.FindGameObjectWithTag("Player");
         //rb = bridge.GetComponent<Rigidbody>();
         createScene = manager.GetComponent<CreateScene>();
         Assign();
@@ -83,7 +85,7 @@ public class Bridge : MonoBehaviour
         StartCoroutine(TilesDestroy(id));
        
     }
-    
+
     public  IEnumerator TilesDestroy(int id)
     {
         while (true)
@@ -151,13 +153,17 @@ public class Bridge : MonoBehaviour
                         
                         tem.t.GetChild(0).GetComponent<Rigidbody>().isKinematic=false;
                         tem.t.GetChild(1).gameObject.SetActive(false);
-                        yield return new WaitForSeconds(0.1f);
+                        yield return new WaitForSeconds(0.05f);
                     }  
                 }
             }
              //   yield return new WaitForSeconds(5);
 
-
+         /*   if(createScene.Sections[1].transform.position.z < player.transform.position.z - 15)
+            {
+                Destroy(createScene.Sections[2].gameObject);
+                createScene.Sections.Remove(createScene.Sections[1]);
+            }*/
                 createScene.DestroyNextSection(1);
             yield return new WaitForSeconds(5);
                 createScene.RemoveFromList();
