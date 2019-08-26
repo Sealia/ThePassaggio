@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int currentStamina;
     PlayerController playerController;
     Createloop loop;
+    GameObject player;
 
     public bool isDead;
     bool damaged;
@@ -24,6 +25,7 @@ public class PlayerStats : MonoBehaviour
         loop = GetComponent<Createloop>();
         currentHealth = startingHealth;
         currentStamina = startingStamina;
+        player = GameObject.FindGameObjectWithTag("Player");
 
     }
     // Start is called before the first frame update
@@ -36,6 +38,10 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
        // timer += Time.deltaTime;
+       if(player.transform.position.y<2)
+        {
+            isDead = true;
+        }
 
 
     }
@@ -47,6 +53,8 @@ public class PlayerStats : MonoBehaviour
         {
             Death();
         }
+
+
     }
 
     public void Heal(int hp)
@@ -90,12 +98,6 @@ public class PlayerStats : MonoBehaviour
        playerController.enabled = false;
 
         // YOU DIED
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            loop.RestartGame();
-        }
-
-
 
     }
 }
