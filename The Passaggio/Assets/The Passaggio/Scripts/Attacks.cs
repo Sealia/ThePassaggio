@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Attacks : MonoBehaviour
 {
- 
+
     public struct Tentacles
     {
-       public Vector3 tran;
-       public Quaternion q;
+        public Vector3 tran;
+        public Quaternion q;
+
+        public Tentacles(Vector3 tran, Quaternion q)
+        {
+            this.tran = tran;
+            this.q = q;
+        }
 
     }
 
@@ -31,8 +37,8 @@ public class Attacks : MonoBehaviour
     // Start is called before the first frame update
 
     private void Awake()
-    { 
-       // Prefabs = Resources.LoadAll<GameObject>("Prefabs");
+    {
+        // Prefabs = Resources.LoadAll<GameObject>("Prefabs");
         player = GameObject.FindGameObjectWithTag("Player");
         stats = player.GetComponent<PlayerStats>();
         ten = new List<Tentacles>();
@@ -42,138 +48,76 @@ public class Attacks : MonoBehaviour
     void Start()
     {
         //  InvokeRepeating("RandomAttack", delay, interval);
-          StartCoroutine(TentacleSpawn());
+        StartCoroutine(TentacleSpawn());
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        spawnRangeZ = player.transform.position.z-2;
+        spawnRangeZ = player.transform.position.z - 2;
 
     }
 
     public IEnumerator TentacleSpawn()
     {
-        while(true)
+        while (true)
         {
-            int tentaclesNumber = Random.Range(1, 4);
-            spawnRangeZ = player.transform.position.z - 2;
+            int newTentacleCount = Random.Range(1, 4);
+            int attempt = 5;
 
-            for (int i=0; i<tentaclesNumber;i++)
+            for (int i = 0; i < newTentacleCount; i++)
             {
-                num = Random.Range(0, 2);
-                float direction = Random.Range(-45, 45);
-                if (num == 0)
+                for (int j = 0; j < attempt; j++)
                 {
-                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 3f, bridge.transform.position.x - 5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
-                    if ((spawnPos.x > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x > 4f)
-                    {
-                        spawnPos.x -= 1;
-                    }
+                    Vector3 position;
+                    Quaternion rotation;
 
-                    int check = 0;
-                    bool spoko = false ;
-                    
-                    while(!spoko)
-                    {
-                        int a = 0;
-                        foreach (Tentacles prev in ten)
-                        {
-                            if (spawnPos.z <= (prev.tran.z + 3) + (direction /45*07f) && spawnPos.z >= (prev.tran.z - 3) - (direction  /45*07f))
-                            {
-                                
-                                a++;
-                                spawnPos.z = Random.Range(spawnRangeZ + 15, spawnRangeZ + 25);
-                            }
-                        }
-                        check += 1;
-                        
-                        if(a==0)
-                        {
-                            spoko = true;
-                        }
+                    int side = Random.Range(0, 1);
+                    float direction = Random.Range(-45, 45);
 
-                        if(check==5)
+
+                    if (side == 0)
+                    {
+                        spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 3f, bridge.transform.position.x - 5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
+                        if ((spawnPos.x > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x > 4f)
                         {
-                            break;
+                            spawnPos.x -= 1;
                         }
                     }
-                    
-                    if(spoko)
+                    if (side == 1)
                     {
-                        t = new Tentacles();
-                        t.q = Quaternion.Euler(0f, direction, 0f);
-                        t.tran = spawnPos;
-                        ten.Add(t);
-                        Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction, 0f));
-                    }
-                }
-                else if (num == 1)
-                {
-                    spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 3f, bridge.transform.position.x + 5f), -30, Random.Range(spawnRangeZ, spawnRangeZ + 1));
+                        spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 3f, bridge.transform.position.x + 5f), -30, Random.Range(spawnRangeZ, spawnRangeZ + 1));
 
-                    if ((spawnPos.z > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x < 4f)
-                    {
-                        spawnPos.x += 1;
+                        if ((spawnPos.z > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x < 4f)
+                        {
+                            spawnPos.x += 1;
+                        }
                     }
 
-                    int check = 0;
-                    bool spoko = false;
+                    bool valid = true; // na start spoko
 
-                    while (!spoko)
+                    for (int k = 0; k < ten.Count; k++) // iteruj przez wszystkie zapisane transformy macek
                     {
-                        int a = 0;
-                        foreach (Tentacles prev in ten)
+                        if (spawnPos.z <= (ten[k].tran.z + 3) + (direction / 45 * 0.7f) && spawnPos.z >= (ten[k].tran.z - 3) - (direction / 45 * 0.7f))
                         {
-                            if (spawnPos.z <= (prev.tran.z + 3)+(direction/45*07f) && spawnPos.z >= (prev.tran.z - 3)- (direction/45f *07f))
-                            {
-
-                                a++;
-                                spawnPos.z = Random.Range(spawnRangeZ + 15, spawnRangeZ + 25);
-                            }
-                        }
-                        check += 1;
-
-                        if (a == 0)
-                        {
-                            spoko = true;
-                        }
-
-                        if (check == 5)
-                        {
+                            valid = false;
                             break;
                         }
                     }
 
-                    if (spoko)
+                    if (valid)
                     {
-                        t = new Tentacles();
-                        t.q = Quaternion.Euler(0f, direction, 0f);
-                        t.tran = spawnPos;
-                        ten.Add(t);
                         Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction + 180f, 0f));
-                    }
-                    
+                        if (t.tran.y > player.transform.position.y)
+                        {
+                            ten.Add(new Tentacles(spawnPos, Quaternion.Euler(0f, direction, 0f)));
+                        }
 
-                }
-
-                for(i=ten.Count-1; i>=0;i--)
-                {
-                    if (ten[i].tran.z < player.transform.position.z - 5)
-                    {
-                        ten.Remove(ten[i]);
                     }
                 }
-                yield return new WaitForSeconds(0.5f);
             }
-             
-
-
-            yield return new WaitForSeconds(2f);
         }
-        
     }
-
-    
 }
+
