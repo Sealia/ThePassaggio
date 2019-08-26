@@ -30,7 +30,7 @@ public class TentacleAttack : MonoBehaviour
         if(other.transform.parent.tag=="Tile")
         {
            
-            other.transform.parent.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
+            other.transform.parent.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
             other.gameObject.transform.gameObject.SetActive(false);
 
 

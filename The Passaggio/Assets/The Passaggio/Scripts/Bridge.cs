@@ -149,7 +149,7 @@ public class Bridge : MonoBehaviour
                    if (tem.destroyed==false && ok==true)
                     {
                         
-                        tem.t.GetChild(0).GetComponent<Rigidbody>().useGravity=true;
+                        tem.t.GetChild(0).GetComponent<Rigidbody>().isKinematic=false;
                         tem.t.GetChild(1).gameObject.SetActive(false);
                         yield return new WaitForSeconds(0.1f);
                     }  
