@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public CameraFollow camera;
+    //private CameraFollow camera;
 
     public float acceleration = 1;
     public float maximumSpeed = 20;
-    public bool useCameraViewDirection = false;
+    //public bool useCameraViewDirection = false;
 
     private float horizontal;
     private float vertical;
@@ -40,12 +40,12 @@ public class PlayerController : MonoBehaviour
 
         desiredDirection = new Vector3(horizontal, 0, vertical).normalized;
 
-
+        /*
         if (useCameraViewDirection && desiredDirection != Vector3.zero)
         {
             desiredDirection = Quaternion.Euler(0, -(camera.Angle -45), 0) * desiredDirection;
 
-        }
+        }*/
 
 
         // Death
@@ -72,7 +72,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.AddForce(desiredDirection * acceleration, ForceMode.Force);
+        // Limit acceleration
+        float currentSpeed = rigidbody.velocity.magnitude;
+        float velocityLimit = Mathf.Abs((currentSpeed / maximumSpeed) - 1);
+
+        // Accelerate
+        rigidbody.AddForce(desiredDirection * acceleration * velocityLimit, ForceMode.Force);
+
+        
+
 
     }
 
