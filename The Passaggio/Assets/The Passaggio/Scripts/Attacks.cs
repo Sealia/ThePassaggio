@@ -130,10 +130,10 @@ public class Attacks : MonoBehaviour
                     }
                 }
 
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
             }
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
     }
 }
