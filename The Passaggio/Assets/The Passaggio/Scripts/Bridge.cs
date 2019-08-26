@@ -41,7 +41,7 @@ public class Bridge : MonoBehaviour
         tiles = new List<Tile>();
         manager = GameObject.Find("GameManager");
         bridge = GameObject.Find("Bridge");
-        rb = bridge.GetComponent<Rigidbody>();
+        //rb = bridge.GetComponent<Rigidbody>();
         createScene = manager.GetComponent<CreateScene>();
         Assign();
     }

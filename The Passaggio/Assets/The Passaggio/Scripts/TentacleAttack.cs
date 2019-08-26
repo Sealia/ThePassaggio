@@ -27,10 +27,11 @@ public class TentacleAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag=="Tile")
+        if(other.transform.parent.tag=="Tile")
         {
-            other.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
-            other.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+           
+            other.transform.parent.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
+            other.gameObject.transform.gameObject.SetActive(false);
 
 
         }
