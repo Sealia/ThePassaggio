@@ -11,28 +11,28 @@ public class CreateScene : MonoBehaviour
     public long p = 2;  //na którym jest gracz
     public double z = 6;    //gdzie był gracz ostatnio
     Vector3 spawnPos = new Vector3(0, 0, 10);
-    public List<GameObject> Sections;
+    public List<Bridge> Sections;
+    public GameObject brb;
     Bridge bridge;
-    GameObject brb;
+    public int id=0;
 
     private void Awake()
     {
-        Sections = new List<GameObject>();
-        bridge = GetComponent<Bridge>();
+        Sections = new List<Bridge>();
         br = GameObject.Find("Bridge");
-        brb = GameObject.Find("Bridge");
-        Sections.Add(br);
+        Sections.Add(br.GetComponent<Bridge>());
+        bridge = br.GetComponent<Bridge>();
         player = GameObject.FindGameObjectWithTag("Player");
         for(int i=0; i<6; i++)
         {
             
-            Sections.Add(Instantiate(brb, spawnPos, brb.transform.rotation));
+            Sections.Add(Instantiate(brb, spawnPos, brb.transform.rotation).GetComponent<Bridge>());
             spawnPos += new Vector3(0, 0, 10);
         }
     }
     void Start()
     {
-        
+        DestroyNextSection(0);
     }
 
     // Update is called once per frame
@@ -45,17 +45,29 @@ public class CreateScene : MonoBehaviour
         }
        if(l-p<4)
         {
-            Sections.Add(Instantiate(brb, spawnPos, brb.transform.rotation));
+            Sections.Add(Instantiate(brb, spawnPos, brb.transform.rotation).GetComponent<Bridge>());
             spawnPos += new Vector3(0, 0, 10);
             l++;
         }           
     }
 
-    public void DestroyNextSection()
+    public void RemoveFromList()
     {
-        Destroy(Sections[0]);
+
+        Destroy(Sections[0].gameObject);
         Sections.Remove(Sections[0]);
-        bridge.GetDestroyed(Sections[0]);
+
 
     }
+
+    public void DestroyNextSection(int n)
+    {
+
+            Sections[n].StartDestroyingSequence(n);
+
+           
+
+    }
+
+
 }

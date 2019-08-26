@@ -8,7 +8,7 @@ public class Bridge : MonoBehaviour
     public struct Tile
     {
         public bool destroyed;
-        Transform t;
+        public Transform t;
 
         public Tile(bool destroyed, Transform t)
         {
@@ -24,10 +24,16 @@ public class Bridge : MonoBehaviour
     }
 
     public List<Tile> tiles;
+    Tile t;
+    public GameObject[] temp = new GameObject[64];
     GameObject bridge;
     CreateScene createScene;
-    GameObject manager; 
-    List<int> numbers = new List<int>() { 0, 1, 2, 3, 4, 5 };
+    GameObject manager;
+    //List<int> numbers = new List<int>() { 0, 1, 2, 3, 4, 5 };
+    //List<int> numbers2 = new List<int>() { 0, 1, 2, 3, 4, 5 };
+    List<int> numbers2;
+    List<int> column = new List<int>() { 24, 25, 30, 31, 32, 33, 38, 39 };
+    Rigidbody rb;
 
 
     private void Awake()
@@ -35,22 +41,23 @@ public class Bridge : MonoBehaviour
         tiles = new List<Tile>();
         manager = GameObject.Find("GameManager");
         bridge = GameObject.Find("Bridge");
+        rb = bridge.GetComponent<Rigidbody>();
         createScene = manager.GetComponent<CreateScene>();
         Assign();
     }
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(TilesDestroy(createScene.Sections[0]));
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(createScene.Sections.Count==1)
+       /* if(createScene.Sections.Count==1)
         {
-            StartCoroutine(TilesDestroy(createScene.Sections[0]));
-        }
+            StartCoroutine(TilesDestroy());
+        */
     }
 
     private List<E> ShuffleList<E>(List<E> inputList)
@@ -71,38 +78,104 @@ public class Bridge : MonoBehaviour
     }
 
     
-    public void GetDestroyed(GameObject section)
+    public void StartDestroyingSequence(int id)
     {
-        StartCoroutine(TilesDestroy(section));
+        StartCoroutine(TilesDestroy(id));
+       
     }
     
-    IEnumerator TilesDestroy(GameObject section)
+    public  IEnumerator TilesDestroy(int id)
     {
-        for (int i = 0; i < 10; i++)
+        while (true)
         {
-            numbers = ShuffleList<int>(numbers);
-
-            for (int j = 0; j < 6; j++)
+            numbers2 = new List<int> { 0, 1, 2, 3, 4, 5 } ;
+            int b = 6;
+            for (int i = 0; i < 10; i++)
             {
-                //tu odpada tegesik
-                yield return new WaitForSeconds(0.5f);
+
+
+                if (i == 4)
+                {
+                    numbers2.Add(30);
+                    numbers2.Add(31);
+                    b = 8;
+                }
+
+                if(i==5)
+                {
+                    int y = 8675;
+                }
+                if (i == 6)
+                {
+                    numbers2.Sort();
+                    b = 6;
+                    numbers2.Remove(numbers2[0]);
+                    numbers2.Remove(numbers2[0]);
+                    b = 6;
+                }
+                
+                numbers2 = ShuffleList<int>(numbers2);
+                for (int j = 0; j < b; j++)
+                {
+                    Tile tem = new Tile();
+                    
+                    bool ok = false;
+
+                    if (i > 3 && i < 6)
+                    {
+
+                        tem = tiles[numbers2[j]];
+                        if (column.Contains(numbers2[j])==false)
+                        {                           
+                            ok = true;
+                        }                                            
+                    }
+                    else
+                    {
+                            tem = tiles[numbers2[j]];
+                            ok = true;                      
+                    }
+
+                    if(numbers2[j]>39 || numbers2[j]<32)
+                    {
+                        numbers2[j] += numbers2.Count;
+                    }
+                    else
+                    {
+                        numbers2[j] += 6;
+                    }
+                       
+
+                   if (tem.destroyed==false && ok==true)
+                    {
+                        
+                        tem.t.GetChild(0).GetComponent<Rigidbody>().useGravity=true;
+                        tem.t.GetChild(1).gameObject.SetActive(false);
+                        yield return new WaitForSeconds(0.1f);
+                    }  
+                }
             }
+             //   yield return new WaitForSeconds(5);
+
+
+                createScene.DestroyNextSection(1);
+            yield return new WaitForSeconds(5);
+                createScene.RemoveFromList();
+
 
         }
-       
-       // createScene.Sections.Remove(createScene.Sections[0]);
-        createScene.DestroyNextSection();
-        StopCoroutine(TilesDestroy(section));
-        
     }
 
     void Assign()
     {
-        foreach(Transform child in transform)
+        foreach(GameObject i in temp)
         {
+
+            t = new Tile(false, i.transform);
+            tiles.Add(t);
+
 
         }
     }
-
     
 }
