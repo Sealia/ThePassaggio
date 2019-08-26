@@ -153,13 +153,13 @@ public class Bridge : MonoBehaviour
                         
                         tem.t.GetChild(0).GetComponent<Rigidbody>().isKinematic=false;
                         tem.t.GetChild(1).gameObject.SetActive(false);
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSeconds(0.02f);
                     }  
                 }
             }
-             //   yield return new WaitForSeconds(5);
+            //   yield return new WaitForSeconds(5);
 
-         /*   if(createScene.Sections[1].transform.position.z < player.transform.position.z - 15)
+         /*   if (createScene.Sections[1].transform.position.z < player.transform.position.z - 15)
             {
                 Destroy(createScene.Sections[2].gameObject);
                 createScene.Sections.Remove(createScene.Sections[1]);
