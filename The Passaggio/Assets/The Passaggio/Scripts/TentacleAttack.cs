@@ -5,10 +5,14 @@ using UnityEngine;
 public class TentacleAttack : MonoBehaviour
 {
     Animator anim;
+    GameObject player;
+    PlayerStats death;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        death = GetComponent<PlayerStats>();
     }
     // Start is called before the first frame update
     void Start()
@@ -34,6 +38,11 @@ public class TentacleAttack : MonoBehaviour
             other.gameObject.transform.gameObject.SetActive(false);
 
 
+        }
+
+        if(other.gameObject==player)
+        {
+            death.isDead = true;
         }
     }
 

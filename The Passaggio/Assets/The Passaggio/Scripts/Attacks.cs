@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class Attacks : MonoBehaviour
 {
-    public GameObject[] Prefabs= new GameObject[2];
+ 
+    public struct Tentacles
+    {
+       public Vector3 tran;
+       public Quaternion q;
+
+    }
 
     public float spawnRangeZ;
     public float spawnPosX;
-
-    private float delay = 5;
-    private float interval = 2;
+    public List<Tentacles> ten;
+    //public List<Transform> ten;
 
     GameObject player;
     PlayerStats stats;
     public GameObject bridge;
-
-    public float spawnX = -2.5f;
-    public float spawny = 2;
+    public GameObject pref;
 
     Vector3 spawnPos;
     int num;
+    Tentacles t;
 
 
 
@@ -31,6 +35,7 @@ public class Attacks : MonoBehaviour
        // Prefabs = Resources.LoadAll<GameObject>("Prefabs");
         player = GameObject.FindGameObjectWithTag("Player");
         stats = player.GetComponent<PlayerStats>();
+        ten = new List<Tentacles>();
 
     }
 
@@ -52,7 +57,7 @@ public class Attacks : MonoBehaviour
     {
         while(true)
         {
-            int tentaclesNumber = Random.RandomRange(1, 4);
+            int tentaclesNumber = Random.Range(1, 4);
             
             for(int i=0; i<tentaclesNumber;i++)
             {
@@ -66,7 +71,42 @@ public class Attacks : MonoBehaviour
                         spawnPos.x -= 1;
                     }
 
-                    Instantiate(Prefabs[0], spawnPos, Quaternion.Euler(0f, direction, 0f));
+                    int check = 0;
+                    bool spoko = false ;
+                    
+                    while(!spoko)
+                    {
+                        int a = 0;
+                        foreach (Tentacles prev in ten)
+                        {
+                            if (spawnPos.z <= prev.tran.z+3 && spawnPos.z >= prev.tran.z - 3)
+                            {
+                                
+                                a++;
+                                spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 2.5f, bridge.transform.position.x - 4.5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));                              
+                            }
+                        }
+                        check += 1;
+                        
+                        if(a==0)
+                        {
+                            spoko = true;
+                        }
+
+                        if(check==5)
+                        {
+                            break;
+                        }
+                    }
+                    
+                    if(spoko)
+                    {
+                        t = new Tentacles();
+                        t.q = Quaternion.Euler(0f, direction, 0f);
+                        t.tran = spawnPos;
+                        ten.Add(t);
+                        Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction, 0f));
+                    }
                 }
                 else if (num == 1)
                 {
@@ -76,7 +116,44 @@ public class Attacks : MonoBehaviour
                     {
                         spawnPos.x += 1;
                     }
-                    Instantiate(Prefabs[0], spawnPos, Quaternion.Euler(0f, direction + 180f, 0f));
+
+                    int check = 0;
+                    bool spoko = false;
+
+                    while (!spoko)
+                    {
+                        int a = 0;
+                        foreach (Tentacles prev in ten)
+                        {
+                            if (spawnPos.z <= prev.tran.z + 3 && spawnPos.z >= prev.tran.z - 3)
+                            {
+
+                                a++;
+                                spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 2.5f, bridge.transform.position.x + 4.5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
+                            }
+                        }
+                        check += 1;
+
+                        if (a == 0)
+                        {
+                            spoko = true;
+                        }
+
+                        if (check == 5)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (spoko)
+                    {
+                        t = new Tentacles();
+                        t.q = Quaternion.Euler(0f, direction, 0f);
+                        t.tran = spawnPos;
+                        ten.Add(t);
+                        Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction + 180f, 0f));
+                    }
+                    
 
                 }
 
@@ -85,7 +162,7 @@ public class Attacks : MonoBehaviour
              
 
 
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(4f);
         }
         
     }
