@@ -8,8 +8,13 @@ public class TentacleAttack : MonoBehaviour
     GameObject player;
     PlayerStats death;
 
+    public AudioClip[] impactSounds;
+
+    public AudioSource audioSource;
+
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         death = GetComponent<PlayerStats>();
@@ -50,5 +55,16 @@ public class TentacleAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
+    }
+
+    public void MakeSound()
+    {
+        int soundIndex = Random.Range(0, impactSounds.Length);
+        audioSource.clip = impactSounds[soundIndex];
+        audioSource.pitch = Random.Range(0.8f, 1.2f);
+        audioSource.volume = Random.Range(0.5f, 0.7f);
+
+        audioSource.Play();
+        audioSource.transform.SetParent(null);
     }
 }
