@@ -157,11 +157,12 @@ public class Attacks : MonoBehaviour
                     
 
                 }
-                foreach(Tentacles b in ten)
+
+                for(i=ten.Count-1; i>=0;i--)
                 {
-                    if(b.tran.z < player.transform.position.z-5)
+                    if (ten[i].tran.z < player.transform.position.z - 5)
                     {
-                        ten.Remove(b);
+                        ten.Remove(ten[i]);
                     }
                 }
                 yield return new WaitForSeconds(0.5f);
