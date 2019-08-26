@@ -84,7 +84,7 @@ public class Attacks : MonoBehaviour
                     Vector3 position;
                     Quaternion rotation;
 
-                    int side = Random.Range(0, 1);
+                    int side = Random.Range(0, 2);
                     float direction = Random.Range(-45, 45);
 
 
@@ -121,7 +121,7 @@ public class Attacks : MonoBehaviour
                     if (valid)
                     {
                         Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction, 0f));
-                        if (t.tran.y < player.transform.position.y)
+                        if (spawnPos.y < player.transform.position.y)
                         {
                             ten.Add(new Tentacles(spawnPos, Quaternion.Euler(0f, direction, 0f)));
                         }
