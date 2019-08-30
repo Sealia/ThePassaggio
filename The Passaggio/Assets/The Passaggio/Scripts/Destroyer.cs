@@ -7,7 +7,7 @@ public class Destroyer : MonoBehaviour
     public float speed=1f;
     Rigidbody player;
     public float fallingImpulseFactor = 1;
-    public float faliingTorqueFactor= 1;
+    public float fallingTorqueFactor= 1;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class Destroyer : MonoBehaviour
 
         if(other.gameObject.tag == "Tile")
         {
-            other.gameObject.GetComponent<Tile>().Fall(fallingImpulseFactor, faliingTorqueFactor);
+            other.gameObject.GetComponent<Tile>().Fall(fallingImpulseFactor, fallingTorqueFactor);
         }
     }
 

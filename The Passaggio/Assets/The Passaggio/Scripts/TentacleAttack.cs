@@ -7,9 +7,8 @@ public class TentacleAttack : MonoBehaviour
     Animator anim;
     GameObject player;
     PlayerStats death;
-    List<int> column = new List<int>() { 24, 25, 30, 31, 32, 33, 38, 39 };
-    //Bridge bridge;
-    //GameObject br;
+    public float fallingImpulseFactor;
+    public float fallingTorqueFactor;
 
     public AudioClip[] impactSounds;
 
@@ -21,10 +20,8 @@ public class TentacleAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         death = GetComponent<PlayerStats>();
-        //br = GameObject.Find("Bridge");
-        //bridge = br.GetComponent<Bridge>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         anim.SetTrigger("Attack");
@@ -32,11 +29,10 @@ public class TentacleAttack : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-       
+        fallingImpulseFactor = GameObject.Find("Destroyer").GetComponent<Destroyer>().fallingImpulseFactor;
+        fallingTorqueFactor = GameObject.Find("Destroyer").GetComponent<Destroyer>().fallingTorqueFactor;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,13 +42,9 @@ public class TentacleAttack : MonoBehaviour
             death.isDead = true;
         }
         else
-        if (other.transform.parent.tag=="Tile")
+        if (other.transform.tag=="Tile")
         {
-
-            other.transform.parent.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-            other.gameObject.transform.gameObject.SetActive(false);
-
-
+            other.transform.GetComponent<Tile>().GetHit(fallingImpulseFactor, fallingTorqueFactor);
         }
 
 
