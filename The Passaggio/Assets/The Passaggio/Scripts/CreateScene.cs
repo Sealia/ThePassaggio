@@ -5,14 +5,14 @@ using System;
 
 public class CreateScene : MonoBehaviour
 {
-    public GameObject br;
+    public GameObject lastBridgeSection;
     GameObject player;
     Vector3 spawnPos = new Vector3(0, 0, 10);
 
 
     private void Awake()
     {
-        br = GameObject.Find("Bridge");
+        lastBridgeSection = GameObject.Find("Bridge");
         player = GameObject.FindGameObjectWithTag("Player");
         for(int i=0; i<6; i++)
         {
@@ -26,15 +26,18 @@ public class CreateScene : MonoBehaviour
 
     void Update()
     {
-        if(br.transform.position.z < player.transform.position.z + 50)
+        if (lastBridgeSection)
         {
-            AddSection();
-        }      
+            if(lastBridgeSection.transform.position.z < player.transform.position.z + 50)
+            {
+                AddSection();
+            }
+        }     
     }
 
     void AddSection()
     {
-        br = Instantiate(br, spawnPos, br.transform.rotation).GetComponent<Bridge>().gameObject;
+        lastBridgeSection = Instantiate(lastBridgeSection, spawnPos, lastBridgeSection.transform.rotation).GetComponent<Bridge>().gameObject;
         spawnPos += new Vector3(0, 0, 10);
     }
 }

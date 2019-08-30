@@ -25,12 +25,12 @@ public class ColumnTile : Tile
         }
     }
 
-    override public void GetHit(float force)
+    override public void GetHit(float force, float faliingTorqueFactor)
     {
         this.transform.rotation = Quaternion.Euler(Random.Range(0,15), Random.Range(0,15), Random.Range(0,15));
     }
 
-    override public void Fall(float fallingImpulseForce)
+    override public void Fall(float fallingImpulseForce, float faliingTorqueFactor)
     {
        /* this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
         this.gameObject.transform.GetChild(1).gameObject.SetActive(false);

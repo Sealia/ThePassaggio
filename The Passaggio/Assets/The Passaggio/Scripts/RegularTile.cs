@@ -33,22 +33,22 @@ public class RegularTile : Tile
 
     }
 
-    override public void GetHit(float force)
+    override public void GetHit(float force, float faliingTorqueFactor)
     {
-        Fall(force);
+        Fall(force, faliingTorqueFactor);
     }
 
-    override public void Fall(float fallingImpulseForce)
+    override public void Fall(float fallingImpulseForce, float faliingTorqueFactor)
     {
         if (!isScheduledForFalling)
         {
             float time = Random.Range(0f, 1.5f);
             isScheduledForFalling = true;
-            StartCoroutine(Check(time, fallingImpulseForce));
+            StartCoroutine(Check(time, fallingImpulseForce, faliingTorqueFactor));
         }               
     }
 
-    IEnumerator Check(float time, float fallingImpulseForce)
+    IEnumerator Check(float time, float fallingImpulseForce, float faliingTorqueFactor)
     {
         yield return new WaitForSeconds(time);
         raydirection = Vector3.back;
@@ -73,12 +73,10 @@ public class RegularTile : Tile
                     }
                 }
                 else
-                {
-                    Debug.Log(Vector3.back * force * fallingImpulseForce);
-                        this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddTorque(torque);
-                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddForce(Vector3.back * force  * fallingImpulseForce, ForceMode.Impulse);
-                      
+                { 
+                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
+                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddTorque(torque * faliingTorqueFactor);
+                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddForce(Vector3.back * force  * fallingImpulseForce, ForceMode.Impulse);                      
                     this.gameObject.GetComponent<MeshCollider>().enabled = false;
                     des_com.DestroyTile(gameObject);
                     hasFallen = true;
