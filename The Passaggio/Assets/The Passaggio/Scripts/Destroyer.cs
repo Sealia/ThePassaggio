@@ -40,7 +40,7 @@ public class Destroyer : MonoBehaviour
 
         if(other.gameObject.tag == "Tile")
         {
-            other.gameObject.GetComponent<Tile>().Fall(fallingImpulseFactor, fallingTorqueFactor);
+            other.gameObject.GetComponent<Tile>().GetSwallowed(fallingImpulseFactor, fallingTorqueFactor);
         }
     }
 

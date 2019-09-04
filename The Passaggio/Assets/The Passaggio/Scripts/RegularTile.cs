@@ -33,28 +33,16 @@ public class RegularTile : Tile
 
     }
 
-    override public void GetHit(float force, float faliingTorqueFactor)
+    public override void Crush()
     {
-        hitByTentacle = true;
-        Fall(force, faliingTorqueFactor);        
+        Fall();
+        des_com.DestroyTile(gameObject);
     }
-
-    override public void Fall(float fallingImpulseForce, float faliingTorqueFactor)
+    
+    public override void Disassemble(float fallingImpulseForce, float faliingTorqueFactor)
     {
-   
-        if (!isScheduledForFalling)
-        {
-            if (hitByTentacle)
-            {
-                StartFalling(fallingImpulseForce, faliingTorqueFactor);
-            }
-            else
-            {
-                float time = Random.Range(0f, 1.5f);              
-                StartCoroutine(Check(time, fallingImpulseForce, faliingTorqueFactor));
-            }
-            isScheduledForFalling = true;
-        }               
+        float time = Random.Range(0f, 1.5f);
+        StartCoroutine(Check(time, fallingImpulseForce, faliingTorqueFactor));
     }
 
     IEnumerator Check(float time, float fallingImpulseForce, float faliingTorqueFactor)
@@ -83,21 +71,15 @@ public class RegularTile : Tile
                 }
                 else
                 {
-                    StartFalling(fallingImpulseForce, faliingTorqueFactor);
+                    Fall();
+                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddForce(Vector3.back * force * fallingImpulseForce, ForceMode.Impulse);
+                    this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddTorque(torque * faliingTorqueFactor);
+                    des_com.DestroyTile(gameObject);
                     hasFallen = true;
                 }            
             }
             yield return new WaitForSeconds(0.01f);
         }             
-    }
-
-    void StartFalling(float fallingImpulseForce, float faliingTorqueFactor)
-    {
-        this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-        this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddTorque(torque * faliingTorqueFactor);
-        this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().AddForce(Vector3.back * force * fallingImpulseForce, ForceMode.Impulse);
-        this.gameObject.GetComponent<MeshCollider>().enabled = false;
-        des_com.DestroyTile(gameObject);
     }
 }
 

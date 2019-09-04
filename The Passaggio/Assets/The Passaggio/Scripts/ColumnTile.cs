@@ -19,22 +19,18 @@ public class ColumnTile : Tile
     // Update is called once per frame
     void Update()
     {
-        if(this.gameObject.transform.position.y < -30)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 
-    override public void GetHit(float force, float faliingTorqueFactor)
+    override public void Crush()
     {
-        this.transform.rotation = Quaternion.Euler(Random.Range(0,15), Random.Range(0,15), Random.Range(0,15));
+        transform.Rotate(new Vector3(Random.Range(0, 5f), Random.Range(0, 5f), Random.Range(0, 5f)));
+        transform.Translate(Vector3.back * 0.1f);
     }
 
-    override public void Fall(float fallingImpulseForce, float faliingTorqueFactor)
+    override public void Disassemble(float fallingImpulseForce, float faliingTorqueFactor)
     {
-       /* this.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().isKinematic = false;
-        this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
-        */
+
     }
 
 }
