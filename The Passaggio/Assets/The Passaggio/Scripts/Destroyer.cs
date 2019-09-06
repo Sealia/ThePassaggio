@@ -22,9 +22,9 @@ public class Destroyer : MonoBehaviour
 
     void Update()
     {
-        if(player.velocity.z/1.5f > 2f)
+        if(player.velocity.z > 2f)
         {
-            speed = player.velocity.z/1.5f;
+            speed = player.velocity.z;
 
         }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);

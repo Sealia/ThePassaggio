@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class RegularTile : Tile
 {
     GameObject destroyer;
     Destroyer des_com;
-    bool isScheduledForFalling = false;
     RaycastHit hit;
     Vector3 raydirection;
     public float force;
     public Vector3 torque;
-    bool hitByTentacle = false;
 
     private void Awake()
     {
@@ -27,7 +24,6 @@ public class RegularTile : Tile
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
