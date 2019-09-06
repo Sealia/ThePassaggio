@@ -19,7 +19,7 @@ public class TentacleAttack : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        death = GetComponent<PlayerStats>();
+        death = player.GetComponent<PlayerStats>();
     }
 
     void Start()
@@ -44,7 +44,7 @@ public class TentacleAttack : MonoBehaviour
         else
         if (other.transform.tag=="Tile")
         {
-            other.transform.GetComponent<Tile>().GetHit(fallingImpulseFactor, fallingTorqueFactor);
+            other.transform.GetComponent<Tile>().GetHit();
         }
 
 

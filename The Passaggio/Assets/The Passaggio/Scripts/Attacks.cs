@@ -5,113 +5,117 @@ using UnityEngine;
 public class Attacks : MonoBehaviour
 {
 
-    public struct Tentacles
+    public struct SpawnedTentacleBounds
     {
-        public Vector3 tran;
-        public Quaternion q;
+        public Vector3 position;
+        public Quaternion rotation;
+        public float z1, z2;
 
-        public Tentacles(Vector3 tran, Quaternion q)
+        public SpawnedTentacleBounds(Vector3 position, Quaternion rotation, float z1, float z2)
         {
-            this.tran = tran;
-            this.q = q;
+            this.position = position;
+            this.rotation = rotation;
+            this.z1 = z1;
+            this.z2 = z2;
         }
-
     }
 
-    public float spawnRangeZ;
-    public float spawnPosX;
-    public List<Tentacles> ten;
-    //public List<Transform> ten;
+    public List<SpawnedTentacleBounds> tentacles;
 
     GameObject player;
-    PlayerStats stats;
-    public GameObject bridge;
-    public GameObject pref;
+    public GameObject tentaclePrefab;
+
+    public float spawnRangeZ;
+    public float playerPosition;
+
+    PlayerStats playerStats;
+    PlayerController playerController;
+    private Rigidbody rigidbody;
 
     Vector3 spawnPos;
-    int num;
-    Tentacles t;
+    SpawnedTentacleBounds t;
 
+    public float playersVelocity;
 
-
-    // Start is called before the first frame update
 
     private void Awake()
     {
-        // Prefabs = Resources.LoadAll<GameObject>("Prefabs");
         player = GameObject.FindGameObjectWithTag("Player");
-        stats = player.GetComponent<PlayerStats>();
-        ten = new List<Tentacles>();
-
+        tentacles = new List<SpawnedTentacleBounds>();
+        playerStats = player.GetComponent<PlayerStats>();
+        playerController = player.GetComponent<PlayerController>();
+        rigidbody = playerController.GetComponent<Rigidbody>();
     }
 
     void Start()
     {
-        //  InvokeRepeating("RandomAttack", delay, interval);
         StartCoroutine(TentacleSpawn());
-
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
-        for (int i = ten.Count - 1; i >= 0; i--)
+        for (int i = tentacles.Count - 1; i >= 0; i--)
         {
-
-                if (ten[i].tran.z < player.transform.position.z - 5)
-                {
-
-                    ten.Remove(ten[i]);
-                }
+            if (tentacles[i].position.z < player.transform.position.z - 10)
+            {
+                tentacles.Remove(tentacles[i]);
+            }
         }
-
     }
 
     public IEnumerator TentacleSpawn()
     {
         while (true)
         {
-            spawnRangeZ = player.transform.position.z;
+            spawnPos = new Vector3();
+            spawnPos.y = -30;
             int newTentacleCount = Random.Range(1, 4);
             int attempt = 5;
+            float z1 = 0, z2 = 0, range=0;
+            float spawnRange = 1f;
 
             for (int i = 0; i < newTentacleCount; i++)
             {
                 for (int j = 0; j < attempt; j++)
                 {
-                    Vector3 position;
-                    Quaternion rotation;
-
+                    spawnRangeZ = player.transform.position.z + 5 + (playersVelocity * 3f);
+                    playerPosition = player.transform.position.z;
+                    spawnPos.z = Random.Range(player.transform.position.z - 2, player.transform.position.z + 2 + (playersVelocity * 3f));
                     int side = Random.Range(0, 2);
                     float direction = Random.Range(-45, 45);
-
+                    playersVelocity = rigidbody.velocity.magnitude;
+                    spawnRange = playersVelocity;
 
                     if (side == 0)
                     {
-                        spawnPos = new Vector3(Random.Range(bridge.transform.position.x - 3f, bridge.transform.position.x - 5f), -30, Random.Range(spawnRangeZ + 15, spawnRangeZ + 25));
-                        if ((spawnPos.x > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x > 4f)
-                        {
-                            spawnPos.x -= 1;
-                        }
+                        spawnPos.x = FindXPosition(-0.5f);
+                        range = Mathf.Sin(direction * Mathf.Deg2Rad);
+                        range = range * 5f * (-1f);
                     }
-                    if (side == 1)
+                    else if (side == 1)
                     {
-                        spawnPos = new Vector3(Random.Range(bridge.transform.position.x + 3f, bridge.transform.position.x + 5f), -30, Random.Range(spawnRangeZ+15, spawnRangeZ + 25));
+                        spawnPos.x = FindXPosition(0.5f);                       
+                        range = Mathf.Sin(direction * Mathf.Deg2Rad);
+                        range = range * 5f;
+                        direction += 180f;
+                    }
 
-                        if ((spawnPos.z > bridge.transform.position.z - 0.98f || spawnPos.z < bridge.transform.position.z + 1f) && spawnPos.x < 4f)
-                        {
-                            spawnPos.x += 1;
-                        }
-                        direction += 180;
+                    if (range > 0)
+                    {
+                        z1 = spawnPos.z - 1.5f;
+                        z2 = spawnPos.z + range + 1.5f;
+                    }
+                    else if(range < 0)
+                    {
+                        z2 = spawnPos.z + 1.5f;
+                        z1 = spawnPos.z + range - 1.5f;
                     }
 
                     bool valid = true;
 
-                    for (int k = 0; k < ten.Count; k++)
+                    for (int k = 0; k < tentacles.Count; k++)
                     {
-                        if ( spawnPos.z <= (ten[k].tran.z + 3) + (direction / 45 * 0.7f) && spawnPos.z >= (ten[k].tran.z - 3) - (direction / 45 * 0.7f))
+                        if ( (tentacles[k].z2 >= z1 && z1 >= tentacles[k].z1) || ( z2 >= tentacles[k].z1 && z2 <= tentacles[k].z2) || (z1 <= tentacles[k].z1 && z2 >= tentacles[k].z2) )
                         {
                             valid = false;
                             break;
@@ -120,20 +124,31 @@ public class Attacks : MonoBehaviour
 
                     if (valid)
                     {
-                        Instantiate(pref, spawnPos, Quaternion.Euler(0f, direction, 0f));
-                        if (spawnPos.y < player.transform.position.y)
+                        Instantiate(tentaclePrefab, spawnPos, Quaternion.Euler(0f, direction, 0f));
+                        if (spawnPos.z > player.transform.position.z - 10)
                         {
-                            ten.Add(new Tentacles(spawnPos, Quaternion.Euler(0f, direction, 0f)));
+                            tentacles.Add(new SpawnedTentacleBounds(spawnPos, Quaternion.Euler(0f, direction, 0f), z1, z2));
                         }
                         break;
-
                     }
                 }
 
-                yield return new WaitForSeconds(1f);
+               // yield return new WaitForSeconds(0.1f);
             }
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    float FindXPosition(float startPosition)
+    {
+        for(float i= startPosition; ; i+= startPosition)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(new Vector3(i, -0.5f, spawnPos.z), 0.5f, LayerMask.GetMask("BridgeTile"));
+            if(hitColliders.Length == 0)
+            {
+                return i;
+            }
         }
     }
 }
