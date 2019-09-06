@@ -12,9 +12,9 @@ public class CameraFollow : MonoBehaviour {
     public float distance=15;
     [Range(0f, 90f)]
     [SerializeField]
-    private float angle;
+    private float angle = 66.6f;
     [SerializeField]
-    private float rotation;
+    private float rotation = -42.49f;
 
     public float Angle
     {
