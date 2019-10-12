@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour
     Createloop loop;
     GameObject player;
 
-    public bool isDead;
+    public bool isDead = false;
     bool damaged;
     float timer;
 
@@ -38,7 +38,7 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
        // timer += Time.deltaTime;
-       if(player.transform.position.y<2)
+       if(player.transform.position.y<-1)
         {
             isDead = true;
         }

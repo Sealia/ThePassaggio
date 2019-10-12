@@ -6,6 +6,7 @@ using System;
 public class CreateScene : MonoBehaviour
 {
     public GameObject lastBridgeSection;
+    public GameObject bridgePrefab;
     GameObject player;
     Vector3 spawnPos = new Vector3(0, 0, 10);
 
@@ -37,7 +38,7 @@ public class CreateScene : MonoBehaviour
 
     void AddSection()
     {
-        lastBridgeSection = Instantiate(lastBridgeSection, spawnPos, lastBridgeSection.transform.rotation).GetComponent<Bridge>().gameObject;
+        lastBridgeSection = Instantiate(bridgePrefab, spawnPos, bridgePrefab.transform.rotation).GetComponent<Bridge>().gameObject;
         spawnPos += new Vector3(0, 0, 10);
     }
 }

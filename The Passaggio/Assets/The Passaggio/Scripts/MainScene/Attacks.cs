@@ -54,6 +54,10 @@ public class Attacks : MonoBehaviour
 
     void Update()
     {
+        if(player.transform.position.y < -5)
+        {
+            gameObject.SetActive(false) ;
+        }
         for (int i = tentacles.Count - 1; i >= 0; i--)
         {
             if (tentacles[i].position.z < player.transform.position.z - 10)
@@ -131,12 +135,25 @@ public class Attacks : MonoBehaviour
                         }
                         break;
                     }
+
+                    if(tentacles.Count > 20)
+                    {
+                        Debug.Log(tentacles.Count);
+                    }
                 }
 
                // yield return new WaitForSeconds(0.1f);
             }
 
             yield return new WaitForSeconds(0.1f);
+
+            for (int i = tentacles.Count - 1; i >= 0; i--)
+            {
+                if (tentacles[i].position.z < player.transform.position.z - 10)
+                {
+                    tentacles.Remove(tentacles[i]);
+                }
+            }
         }
     }
 
