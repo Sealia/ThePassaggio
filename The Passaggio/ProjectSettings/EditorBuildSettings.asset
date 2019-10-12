@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/The Passaggio/Scenes/MainMenu Scene.unity
-    guid: 0d030f7c0a9b1b7439945fddff785e94
-  - enabled: 1
-    path: Assets/The Passaggio/Scenes/New Scene.unity
-    guid: b2440d769e8d7724eaf3401b5149aa3e
+    path: Assets/The Passaggio/Scenes/Main Scene.unity
+    guid: 48427ee38ead2f9418649fa0b3141109
   m_configObjects: {}

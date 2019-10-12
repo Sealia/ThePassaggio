@@ -120,6 +120,83 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &154422907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 154422911}
+  - component: {fileID: 154422910}
+  - component: {fileID: 154422909}
+  - component: {fileID: 154422908}
+  m_Layer: 2
+  m_Name: Destroyer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!54 &154422908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154422907}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!114 &154422909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154422907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd63b97e6c51d8f45a77b0df77376699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  fallingImpulseFactor: 50
+  fallingTorqueFactor: 1
+--- !u!65 &154422910
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154422907}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.87, y: 0.8551121, z: 1.6}
+  m_Center: {x: 0.8937874, y: -0.07244396, z: -0.2658563}
+--- !u!4 &154422911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154422907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -6.42}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &344405872
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,13 +634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9842b302ba992b849adcfac09872a0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  br: {fileID: 3935404288099079343, guid: 1ab483a7fb52ace47a262e6e5c642656, type: 3}
-  l: 6
-  p: 2
-  z: 6
-  Sections: []
-  brb: {fileID: 3935404288099079343, guid: 1ab483a7fb52ace47a262e6e5c642656, type: 3}
-  id: 0
+  lastBridgeSection: {fileID: 0}
+  bridgePrefab: {fileID: 3935404288099079343, guid: 1ab483a7fb52ace47a262e6e5c642656,
+    type: 3}
 --- !u!114 &853333030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df709877f23d2714098920e879d5a10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameover: {fileID: 0}
 --- !u!114 &853333031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,10 +1001,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00a6ba3769bdbf43b3a321be18ddb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tentaclePrefab: {fileID: 1950571138224594976, guid: 1a88df325ea98d04caf8de5b62849fa0,
+    type: 3}
   spawnRangeZ: 0
-  spawnPosX: 0
-  bridge: {fileID: 3935404288099079343, guid: 1ab483a7fb52ace47a262e6e5c642656, type: 3}
-  pref: {fileID: 1950571138224594976, guid: 1a88df325ea98d04caf8de5b62849fa0, type: 3}
+  playerPosition: 0
+  playersVelocity: 0
 --- !u!4 &987563101
 Transform:
   m_ObjectHideFlags: 0
